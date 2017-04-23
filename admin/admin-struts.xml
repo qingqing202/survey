@@ -1,0 +1,194 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE struts PUBLIC "-//Apache Software Foundation//DTD Struts Configuration 2.1.7//EN"
+    "struts-2.1.7.dtd">
+<struts>
+	<package name="adminstruts-default" extends="default">
+		<interceptors>
+			<interceptor name="adminUrlInteceptor"
+				class="com.nimbus.admin.interceptor.AdminLoginInteceptor">
+			</interceptor>
+			<interceptor-stack name="adminStackInteceptor">
+				<interceptor-ref name="NimbusCompleteStack" />
+				<interceptor-ref name="adminUrlInteceptor" />
+			</interceptor-stack>
+		</interceptors>
+		<global-results>
+			<result name="admLogin" type="redirect">/admin/adminLogin.htm</result>
+			<result name="forbid">/admin/success.jsp</result>
+		</global-results>
+	</package>
+	
+	<package name="admin" extends="adminstruts-default" namespace="/admin">
+		<action name="adminLogin" class="admLogin">
+			<result name="login">login.jsp</result>
+			<result name="succes" type="redirect">/admin/adminTunnel.htm</result>
+			<result name="input">login.jsp</result>
+			<result name="revise">user/revisePassword.jsp</result>
+			<result name="pass">success.jsp</result>
+		</action>
+		<action name="adminTunnel" class="admChannel">
+			<interceptor-ref name="adminStackInteceptor"></interceptor-ref>
+			<result >manage.jsp</result>
+			<result name="left">left.jsp</result>
+			<result name="head">head.jsp</result>
+		</action>
+		<action name="adminEditTunnel" class="adminEditTunnel">
+			<interceptor-ref name="adminStackInteceptor"></interceptor-ref>
+			<result name="chnlist">channel/chn_list.jsp</result>
+			<result name="edit">channel/chn_edit.jsp</result>
+			<result name="vmode">channel/chn_mode_list.jsp</result>
+			<result name="emode">channel/chn_mode_edit.jsp</result>
+			<!--<result name="rvmode" type="redirect">adminEditTunnel.htm?action=modeview</result>  -->
+		</action>
+		<action name="manageRole" class="manageRole">
+		<interceptor-ref name="adminStackInteceptor"></interceptor-ref>
+			<result name="addrole">user/role_edit.jsp</result>
+			<result name="listrole">user/role_list.jsp</result>
+			<result name="purview">user/purview_page.jsp</result>
+		</action>
+		<action name="manageUser" class="admUser">
+			<interceptor-ref name="adminStackInteceptor"></interceptor-ref>
+			<result name="list">user/adm_list.jsp</result>
+			<result name="edit">user/adm_edit.jsp</result>
+			<result name="cpwd">user/changePwd.jsp</result>
+			<result name="pass">success.jsp</result>
+		</action>
+	</package>
+	
+ 	<!-- customer manager -->
+	<package name="admin_customer" extends="adminstruts-default" namespace="/admin/customer">
+		<action name="manageCustomer" class="Admin.customer">
+			<interceptor-ref name="adminStackInteceptor"></interceptor-ref>
+			<result name="list">customerList.jsp</result>
+			<result name="view">customerInfo.jsp</result>
+		</action>
+		<action name="managePhoneUser" class="Admin.phoneUser">
+			<!-- <interceptor-ref name="adminStackInteceptor"></interceptor-ref> -->
+			<result name="list">phoneUserList.jsp</result>
+			<result name="log">userBehaviorLog.jsp</result>
+			<result name="display" type="stream"> 
+			  <param name="contentType">image/jpeg</param>
+			  <param name="inputName">downloadFile</param>
+			  <param name="contentDisposition">attachment;filename="${fileName}"</param>
+			  <param name="bufferSize">16384</param>
+			</result>
+		</action>
+		
+		<action name="pushMessage" class="Admin.pushMessage">
+          <result>pushMessage.jsp</result>
+        </action>
+	</package>
+	
+	<package name="admin_data" extends="adminstruts-default" namespace="/admin/data">
+	    <action name="manageDevice" class="Admin.device">
+	        <!-- <interceptor-ref name="adminStackInteceptor"></interceptor-ref>  -->
+	        <result name="list">deviceList.jsp</result>
+	        <result name="edit">deviceEdit.jsp</result>
+	        <result name="copy">deviceCopy.jsp</result>
+        </action>
+        <action name="manageRemoter" class="Admin.remoter">
+	        <!-- <interceptor-ref name="adminStackInteceptor"></interceptor-ref>  -->
+	        <result name="list">remoterList.jsp</result>
+	        <result name="edit">remoterEdit.jsp</result>
+	        <result name="add">remoterAdd.jsp</result>
+        </action>
+        <action name="manageRemoterButton" class="Admin.remoterButton">
+	        <!-- <interceptor-ref name="adminStackInteceptor"></interceptor-ref>  -->
+	        <result name="list">remoterButtonList.jsp</result>
+	        <result name="edit">remoterButtonEdit.jsp</result>
+        </action>
+        <action name="manageRemoterTag" class="Admin.remoterTag">
+	        <!-- <interceptor-ref name="adminStackInteceptor"></interceptor-ref>  -->
+	        <result name="list">remoterTagList.jsp</result>
+	        <result name="edit">remoterTagEdit.jsp</result>
+        </action>
+        <action name="manageRemoterSetting" class="Admin.remoterSetting">
+	        <!-- <interceptor-ref name="adminStackInteceptor"></interceptor-ref>  -->
+	        <result name="list">remoterSettingList.jsp</result>
+	        <result name="edit">remoterSettingEdit.jsp</result>
+        </action>
+        <action name="manageRemoterTree" class="Admin.remoterTree">
+	        <!-- <interceptor-ref name="adminStackInteceptor"></interceptor-ref>  -->
+	        <result name="list">remoterTreeList.jsp</result>
+	        <result name="edit">remoterTreeEdit.jsp</result>
+	        <result name="view">remoterTreeView.jsp</result>
+        </action>
+        <action name="manageChannelList" class="Admin.channelList">
+	        <!-- <interceptor-ref name="adminStackInteceptor"></interceptor-ref>  -->
+	        <result name="list">channelListList.jsp</result>
+	        <result name="edit">channelListEdit.jsp</result>
+        </action>
+        <action name="manageTvProgram" class="Admin.tvProgram">
+	        <!-- <interceptor-ref name="adminStackInteceptor"></interceptor-ref>  -->
+	        <result name="list">tvProgramList.jsp</result>
+	        <result name="edit">tvProgramEdit.jsp</result>
+        </action>
+        <action name="manageBrand" class="Admin.brand">
+	        <!-- <interceptor-ref name="adminStackInteceptor"></interceptor-ref>  -->
+	        <result name="list">brandList.jsp</result>
+	        <result name="edit">brandEdit.jsp</result>
+        </action>
+        <action name="manageKey" class="Admin.key">
+	        <!-- <interceptor-ref name="adminStackInteceptor"></interceptor-ref>  -->
+	        <result name="list">keyList.jsp</result>
+	        <result name="edit">keyEdit.jsp</result>
+        </action>
+        <action name="manageDeviceBrand" class="Admin.deviceBrand">
+	        <!-- <interceptor-ref name="adminStackInteceptor"></interceptor-ref>  -->
+	        <result name="list">deviceBrandList.jsp</result>
+        </action>
+        <action name="managePhone" class="Admin.phone">
+	        <!-- <interceptor-ref name="adminStackInteceptor"></interceptor-ref>  -->
+	        <result name="list">phoneList.jsp</result>
+	        <result name="edit">phoneEdit.jsp</result>
+        </action>
+        <action name="managePhoneSetting" class="Admin.phoneSetting">
+	        <!-- <interceptor-ref name="adminStackInteceptor"></interceptor-ref>  -->
+	        <result name="list">phoneSettingList.jsp</result>
+	        <result name="edit">phoneSettingEdit.jsp</result>
+        </action>
+        
+        <action name="testIn" class="Admin.test"></action>
+	</package>
+	
+	<!-- pictures manager -->
+	<package name="admin_picture" extends="adminstruts-default" namespace="/admin/picture">
+		<action name="managePicture" class="Admin.picture">
+			<!-- <interceptor-ref name="adminStackInteceptor"></interceptor-ref> -->
+			<result name="list">pictureList.jsp</result>
+			<result name="identify">pictureIdentify.jsp</result>
+			<result name="label">pictureLabel.jsp</result>
+			<result name="log">log.jsp</result>
+			<result name="display" type="stream"> 
+			  <param name="contentType">image/jpeg</param>
+			  <param name="inputName">downloadFile</param>
+			  <param name="contentDisposition">attachment;filename="${fileName}"</param>
+			  <param name="bufferSize">16384</param>
+			</result>
+			<result name="display2" type="stream"> 
+			  <param name="contentType">image/jpeg</param>
+			  <param name="inputName">downloadFileOcr</param>
+			  <param name="contentDisposition">attachment;filename="${fileName}"</param>
+			  <param name="bufferSize">16384</param>
+			</result>
+			<result name="display3" type="stream"> 
+			  <param name="contentType">image/jpeg</param>
+			  <param name="inputName">downloadFileOrignal</param>
+			  <param name="contentDisposition">attachment;filename="${fileName}"</param>
+			  <param name="bufferSize">16384</param>
+			</result>
+		</action>
+		<action name="managePictureSeed" class="Admin.pictureSeed">
+			<!-- <interceptor-ref name="adminStackInteceptor"></interceptor-ref> -->
+			<result name="list">pictureSeedList.jsp</result>
+			<result name="view">pictureSeedInfo.jsp</result>
+			<result name="display" type="stream"> 
+			  <param name="contentType">image/jpeg</param>
+			  <param name="inputName">downloadFile</param>
+			  <param name="contentDisposition">attachment;filename="${fileName}"</param>
+			  <param name="bufferSize">16384</param>
+			</result>
+			<result name="gallery">pictureSeedGallery.jsp</result>
+		</action>
+	</package>
+</struts>

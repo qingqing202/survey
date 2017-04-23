@@ -1,0 +1,13 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<project-module
+  type="WEB"
+  name="nimbus_web"
+  id="myeclipse.1322046687140"
+  context-root="/nimbus_web"
+  j2ee-spec="6.0"
+  archive="nimbus_web.war">
+  <attributes>
+    <attribute name="webrootdir" value="WebRoot" />
+  </attributes>
+</project-module>
+
